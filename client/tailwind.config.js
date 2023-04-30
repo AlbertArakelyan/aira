@@ -9,6 +9,9 @@ module.exports = {
     colors: {
       primary: colors.violet,
       secondary: colors.fuchsia,
+      gray: colors.gray,
+      black: colors.black,
+      slate: colors.slate,
     },
     extend: {},
   },
