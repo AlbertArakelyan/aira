@@ -1,5 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 
+// Pages
+import Summarizer from './pages/user/Summarizer';
+
 // Components
 import { UserLayout } from './components';
 
@@ -12,7 +15,8 @@ const App = () => {
       {user ? (
         <Routes>
           <Route element={<UserLayout />}>
-            <Route path="/" element={<div>main page</div>} />
+            <Route path="/" element={<Summarizer />} />
+            <Route path="/summarizer" element={<Summarizer />} />
           </Route>
         </Routes>
       ) : (
