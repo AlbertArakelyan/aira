@@ -1,13 +1,28 @@
 // Components
 import AsideNavItem from './AsideNavItem';
 
+// Constants
+import { asideNavItems } from '../../../constants';
+
 
 const AsideNav = () => {
+  const asideNavContent = (
+    asideNavItems.map((asideNavItem) => {
+      return (
+        <AsideNavItem
+          key={asideNavItem.id}
+          value={asideNavItem.value}
+          href={asideNavItem.href}
+          icon={asideNavItem.icon}
+        />
+      )
+    })
+  );
+
   return (
     <nav className="mt-5">
       <ul>
-        <AsideNavItem icon="article" value="Summarizer" />
-        <AsideNavItem icon="article" value="Something" />
+        {asideNavContent}
       </ul>
     </nav>
   );
