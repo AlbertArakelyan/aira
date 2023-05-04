@@ -10,3 +10,4 @@ export { default as Icon } from './shared/Icon';
 
 // UI
 export { default as Avatar } from './UI/Avatar';
+export { default as Input } from './UI/Input';
