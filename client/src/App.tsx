@@ -2,13 +2,14 @@ import { Route, Routes } from 'react-router-dom';
 
 // Pages
 import Summarizer from './pages/user/Summarizer';
+import Auth from './pages/guest/Auth';
 
 // Components
 import { UserLayout } from './components';
 
 
 const App = () => {
-  const user = {};
+  const user = null;
 
   return (
     <div className="App">
@@ -20,7 +21,9 @@ const App = () => {
           </Route>
         </Routes>
       ) : (
-        <p>not available for not users</p>
+        <Routes>
+          <Route path="/" element={<Auth />} />
+        </Routes>
       )}
     </div>
   );
