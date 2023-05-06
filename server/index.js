@@ -1,14 +1,25 @@
 import express from 'express';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 import * as dotenv from 'dotenv';
 
 // DB
 import connectDB from './db.js';
 
+// Routers
+import userRouter from './routes/user.js';
+
 
 dotenv.config();
 
 const app = express();
+
+// Global usages
+app.use(cors());
+app.use(bodyParser.json());
+
+// Routes
+app.use('/api/v1/user', userRouter);
 
 // Connect db and start server
 app.get('/', (req, res) => {
