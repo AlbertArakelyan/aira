@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 import * as dotenv from 'dotenv';
 
 // Controllers
@@ -38,11 +39,12 @@ class UserController extends Controller {
         });
       }
 
+      const hashedPassword = await bcrypt.hash(password, 14);
+
       const user = new User({
         email,
-        password,
+        password: hashedPassword,
         fullName,
-        confirmPassword,
         role: 'user',
         isEmailVerified: false,
       });
