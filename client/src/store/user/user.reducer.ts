@@ -2,7 +2,10 @@ import { createReducer } from '@reduxjs/toolkit';
 import store from 'store';
 
 // Actions
-import { signUp } from './user.actions';
+import {
+  signUp,
+  verifyEmail,
+} from './user.actions';
 
 // Types
 import { IUserState } from './types';
@@ -32,6 +35,20 @@ const userReducer = createReducer(initialState, (builder) => {
     .addCase(signUp.pending, (state) => {
       state.error = null;
       state.loading = false;
+    })
+
+    .addCase(verifyEmail.fulfilled, (state, action) => {
+      state.isVerificationPassed = action.payload.isEmailVerified;
+      state.loading = false;
+      state.error = null;
+    })
+    .addCase(verifyEmail.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    })
+    .addCase(verifyEmail.pending, (state) => {
+      state.loading = true;
+      state.error = null;
     })
 
     .addDefaultCase((state) => state);

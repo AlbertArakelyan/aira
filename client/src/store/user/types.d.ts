@@ -18,6 +18,7 @@ interface IUserState extends IUserData {
   loading: boolean;
 }
 
+
 /** signUp action */
 // Payload type
 interface ISignUpPayloadData extends IUserSignUpData {
@@ -27,4 +28,17 @@ interface ISignUpPayloadData extends IUserSignUpData {
 // Return type
 interface ISignUpActionReturnData {
   email: string;
+}
+
+
+/** verifyEmail */
+// Payload type
+interface IVerifyEmailPayloadData {
+  token: string;
+}
+
+// Return type
+interface IVerifyEmailActionReturnData {
+  token: string;
+  isEmailVerified: boolean;
 }

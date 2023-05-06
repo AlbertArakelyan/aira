@@ -87,6 +87,36 @@ class UserController extends Controller {
       });
     }
   }
+
+  static async verifyEmail (req, res) {
+    try {
+      const { token } = req.params;
+      const { userId } = jwt.verify(token, process.env.JWT_SECRET);
+
+      const user = await User.findById(userId);
+
+      user.isEmailVerified = true;
+
+      await user.save();
+
+      res.status(200).json({
+        success: true,
+        data: {
+          token,
+          isEmailVerified: true,
+        },
+        message: userControllerMessages.emailVerified,
+        statusCode: 200,
+      });
+    } catch (error) {
+      super.catchError(error);
+      res.status(500).json({
+        success: false,
+        message: error.message || 'Something went wrong.',
+        statusCode: 500,
+      });
+    }
+  }
 }
 
 export default UserController;
