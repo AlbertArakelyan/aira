@@ -6,6 +6,7 @@ const userSchema = mongoose.Schema({
   password: { type: String, required: true },
   fullName: { type: String, required: true, },
   photoPath: { type: String },
+  role: { type: String, required: true },
   isEmailVerified: { type: Boolean },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Number },

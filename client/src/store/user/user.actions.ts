@@ -9,20 +9,22 @@ import {
 import UserService from '../../services/UserService';
 
 // Types
-import {IGetUserPayloadData, IGetUserActionReturnData, IUserData } from './types';
+import {ISignUpPayloadData, ISignUpActionReturnData } from './types';
 
 
-export const signUp = createAsyncThunk<IGetUserActionReturnData, IGetUserPayloadData>(
+export const signUp = createAsyncThunk<ISignUpActionReturnData, ISignUpPayloadData>(
   SIGN_UP,
   async (data) => {
     try {
-      const response = await UserService.signUp<IUserData, IGetUserPayloadData>(data);
+      const response = await UserService.signUp<ISignUpActionReturnData, ISignUpPayloadData>(data);
 
-      console.log(response.data);
+      if (!response.data?.success) {
+        throw new Error(response.data.message || 'Something went wrong');
+      }
 
       return response.data.data;
     } catch (error: any) {
-      throw error.message;
+      throw error.message as string;
     }
   },
 );

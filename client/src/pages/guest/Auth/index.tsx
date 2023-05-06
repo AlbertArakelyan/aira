@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useAppDispatch } from '../../../store';
+import { useAppDispatch, useAppSelector } from '../../../store';
 
 // Components
 import { Input, Button } from '../../../components';
+
+// Actions
+import { signUp } from '../../../store/user/user.actions';
 
 // Utils
 import { signUpSchema, signInSchema } from '../../../utils';
@@ -15,6 +18,10 @@ import { IUserSignInData, IUserSignUpData } from '../../../types';
 
 const Auth = () => {
   const dispatch = useAppDispatch();
+
+  const {
+    verificationData,
+  } = useAppSelector((state) => state.user);
 
   const [isSignUp, setIsSugnUp] = useState(false);
 
@@ -27,7 +34,10 @@ const Auth = () => {
   };
 
   const handleFornSubmit = (data: IUserSignInData | IUserSignUpData) => {
-        
+    if (isSignUp) {
+      const sendData = data as IUserSignUpData;
+      dispatch(signUp(sendData));
+    }
   };
 
   useEffect(() => {
@@ -86,6 +96,11 @@ const Auth = () => {
             </p>
           )}
         </div>
+        {verificationData && (
+          <span className="text-xs mt-4 text-center">
+            Verifcation email has been sent to <span className="text-primary-400">{verificationData.email}</span>. Please check your email.
+          </span>
+        )}
       </form>
     </div>
   );

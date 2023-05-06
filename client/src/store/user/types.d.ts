@@ -6,17 +6,25 @@ interface IUserData {
   userData: IUser | null;
 }
 
+interface IVerificationData {
+  email: string;
+}
+
 interface IUserState extends IUserData {
+  verificationData: IVerificationData | null;
+  isVerificationPassed: boolean | null;
+  forgotPasswordData: any;
   error: string | null;
   loading: boolean;
 }
 
+/** signUp action */
 // Payload type
-interface IGetUserPayloadData extends IUserSignUpData {
+interface ISignUpPayloadData extends IUserSignUpData {
 
 }
 
 // Return type
-interface IGetUserActionReturnData extends IUserData {
-
+interface ISignUpActionReturnData {
+  email: string;
 }
