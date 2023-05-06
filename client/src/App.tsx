@@ -6,6 +6,7 @@ import Summarizer from './pages/user/Summarizer';
 import Auth from './pages/guest/Auth';
 import VerifyEmail from './pages/guest/VerifyEmail';
 import ForgotPassword from './pages/guest/ForgotPassword';
+import ResetPassword from './pages/guest/ResetPassword';
 
 // Components
 import { UserLayout } from './components';
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/" element={<Auth />} />
           <Route path="/verify-email/:token" element={<VerifyEmail />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
         </Routes>
       )}
     </div>

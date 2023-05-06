@@ -20,6 +20,10 @@ class UserService extends Service {
   static forgotPassword<T, D>(data: D) {
     return request<IResponseData<T>>('POST', 'user/forgot-password', data);
   }
+
+  static resetPassword<T, D>(data: D) {
+    return request<IResponseData<T>>('POST', 'user/reset-password', data);
+  }
 }
 
 export default UserService;

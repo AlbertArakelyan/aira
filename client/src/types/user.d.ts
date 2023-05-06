@@ -17,3 +17,8 @@ interface IUserSignUpData extends IUserSignInData {
 interface IUserForgotPasswordData {
   email: string;
 }
+
+interface IUserResetPasswordData {
+  password: string;
+  confirmPassword: string;
+}

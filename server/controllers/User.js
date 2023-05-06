@@ -54,7 +54,7 @@ class UserController extends Controller {
         userId: user._id,
       }, process.env.JWT_SECRET);
 
-      const verificationUrl = `${process.env.NODEMAILER_WEBSITE_URL}${token}`;
+      const verificationUrl = `${process.env.NODEMAILER_WEBSITE_URL}verify-email/${token}`;
       
       const mailOptions = {
         from: 'albertarakelyan1998@gmail.com',
@@ -172,6 +172,55 @@ class UserController extends Controller {
         }
       });
     } catch (error) {
+      super.catchError(error);
+      res.status(500).json({
+        success: false,
+        message: error.message || 'Something went wrong.',
+        statusCode: 500,
+      });
+    }
+  }
+
+  static async resetPassword(req, res) {
+    try {
+      const { resetToken, password, confirmPassword } = req.body;
+
+      const user = await User.findOne({ resetPasswordToken: resetToken, resetPasswordExpires: { $gt: Date.now() } });
+
+      if (!user) {
+        return res.status(400).json({
+          success: false,
+          message: userControllerMessages.invalidToken,
+          statusCode: 400,
+        });
+      }
+
+      if (password !== confirmPassword) {
+        return res.status(400).json({
+          success: false,
+          message: userControllerMessages.passwordsDontMatch,
+          statusCode: 400,
+        });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 14);
+
+      user.password = hashedPassword;
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpires = undefined;
+
+      await user.save();
+
+      res.status(200).json({
+        success: true,
+        data: {
+          isPasswordReset: true,
+        },
+        message: userControllerMessages.passwordResetSuccess,
+        statusCode: 200,
+      });
+    } catch (error) {
+      super.catchError(error);
       res.status(500).json({
         success: false,
         message: error.message || 'Something went wrong.',

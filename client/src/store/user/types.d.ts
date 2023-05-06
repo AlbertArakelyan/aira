@@ -1,5 +1,5 @@
 import { IUser } from '../../types';
-import { IUserSignUpData } from '../../types';
+import { IUserSignUpData, IUserResetPasswordData } from '../../types';
 
 interface IUserData {
   accessToken: string | null;
@@ -14,6 +14,7 @@ interface IUserState extends IUserData {
   verificationData: IVerificationForogotPasswordData | null;
   isVerificationPassed: boolean | null;
   forgotPasswordData: IVerificationForogotPasswordData | null;
+  isPasswordReset: boolean | null;
   error: string | null;
   loading: boolean;
 }
@@ -53,4 +54,16 @@ interface IForgotPasswordPayloadData {
 // Return type
 interface IForgotPasswordActionReturnData {
   email: string;
+}
+
+
+/** resetPassword action */
+// Payload type
+interface IResetPasswordPayloadData extends IUserResetPasswordData {
+  resetToken: string;
+}
+
+// Return type
+interface IResetPasswordActionReturnData {
+  isPasswordReset: boolean;
 }

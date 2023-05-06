@@ -5,6 +5,9 @@ const userControllerMessages = {
   notFound: 'User with that doesn\'t exist.',
   sendMailError: 'Error sending email.',
   resetPassowrdMailSent: 'Password reset request has successfully been sent.',
+  invalidToken: 'Token is invalid or not found.',
+  passwordsDontMatch: 'Passwords don\'t match.',
+  passwordResetSuccess: 'Password has successfully been reset.',
 };
 
 export default userControllerMessages;
