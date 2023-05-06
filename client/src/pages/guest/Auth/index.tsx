@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppDispatch, useAppSelector } from '../../../store';
@@ -82,19 +83,22 @@ const Auth = () => {
           type="password"
           {...register('confirmPassword')}
         />)}
-        <Button className="w-full mb-4" type="submit">
+        <Button className="w-full mb-4">
           Sign {isSignUp ? 'Up' : 'In'}
         </Button>
-        <div className="text-sm">
+        <div className="text-sm flex flex-col items-center justify-start">
           {isSignUp ? (
             <p>
-              Already have an account? <span className="text-primary-400 cursor-pointer" onClick={handleToggleIsSignUp}>Sign In</span>
+              Already have an account? <span className="text-primary-400 cursor-pointer underline" onClick={handleToggleIsSignUp}>Sign In</span>
             </p>
           ) : (
             <p>
-              Don't have an account? <span className="text-primary-400 cursor-pointer" onClick={handleToggleIsSignUp}>Sign Up</span>
+              Don't have an account? <span className="text-primary-400 cursor-pointer underline" onClick={handleToggleIsSignUp}>Sign Up</span>
             </p>
           )}
+          <Link className="text-primary-400 underline" to="/forgot-password">
+            Forgot password?
+          </Link>
         </div>
         {verificationData && (
           <span className="text-xs mt-4 text-center">

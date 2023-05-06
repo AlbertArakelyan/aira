@@ -5,6 +5,7 @@ import Summarizer from './pages/user/Summarizer';
 
 import Auth from './pages/guest/Auth';
 import VerifyEmail from './pages/guest/VerifyEmail';
+import ForgotPassword from './pages/guest/ForgotPassword';
 
 // Components
 import { UserLayout } from './components';
@@ -26,6 +27,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Auth />} />
           <Route path="/verify-email/:token" element={<VerifyEmail />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       )}
     </div>

@@ -6,14 +6,14 @@ interface IUserData {
   userData: IUser | null;
 }
 
-interface IVerificationData {
+interface IVerificationForogotPasswordData {
   email: string;
 }
 
 interface IUserState extends IUserData {
-  verificationData: IVerificationData | null;
+  verificationData: IVerificationForogotPasswordData | null;
   isVerificationPassed: boolean | null;
-  forgotPasswordData: any;
+  forgotPasswordData: IVerificationForogotPasswordData | null;
   error: string | null;
   loading: boolean;
 }
@@ -31,7 +31,7 @@ interface ISignUpActionReturnData {
 }
 
 
-/** verifyEmail */
+/** verifyEmail action */
 // Payload type
 interface IVerifyEmailPayloadData {
   token: string;
@@ -41,4 +41,16 @@ interface IVerifyEmailPayloadData {
 interface IVerifyEmailActionReturnData {
   token: string;
   isEmailVerified: boolean;
+}
+
+
+/** forgotPassword action */
+// Payload type
+interface IForgotPasswordPayloadData {
+  email: string;
+}
+
+// Return type
+interface IForgotPasswordActionReturnData {
+  email: string;
 }

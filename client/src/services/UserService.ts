@@ -16,6 +16,10 @@ class UserService extends Service {
   static verifyEmail<T>(token: string) {
     return request<IResponseData<T>>('GET', `user/verify-email/${token}`);
   }
+
+  static forgotPassword<T, D>(data: D) {
+    return request<IResponseData<T>>('POST', 'user/forgot-password', data);
+  }
 }
 
 export default UserService;

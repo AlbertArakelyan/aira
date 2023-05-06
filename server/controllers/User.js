@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import * as dotenv from 'dotenv';
 
 // Controllers
@@ -112,6 +113,65 @@ class UserController extends Controller {
       });
     } catch (error) {
       super.catchError(error);
+      res.status(500).json({
+        success: false,
+        message: error.message || 'Something went wrong.',
+        statusCode: 500,
+      });
+    }
+  }
+
+  static async forgotPassord(req, res) {
+    try {
+      const { email } = req.body;
+
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: userControllerMessages.notFound,
+          statusCode: 404,
+        });
+      }
+
+      const resetToken = crypto.randomUUID().toString('hex');
+
+      user.resetPasswordToken = resetToken;
+      user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+      await user.save();
+
+      const resetUrl = `${process.env.NODEMAILER_WEBSITE_URL}reset-password/${resetToken}`;
+
+      const mailOptions = {
+        from: 'albertarakelyan1998@gmail.com',
+        to: email,
+        subject: 'Password Reset Request',
+        html: `Please click this link to reset your password: <a href="${resetUrl}">${resetUrl}</a>`,
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+          return res.status(500).json({
+            success: false,
+            message: userControllerMessages.sendMailError,
+            statusCode: 500,
+          });
+        } else {
+          console.log(`Email sent: ${info.response}`);
+          return res.status(200).json({
+            success: true,
+            data: {
+              email,
+            },
+            message: userControllerMessages.resetPassowrdMailSent,
+            statusCode: 200,
+          });
+        }
+      });
+    } catch (error) {
       res.status(500).json({
         success: false,
         message: error.message || 'Something went wrong.',

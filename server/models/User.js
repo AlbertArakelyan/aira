@@ -10,6 +10,11 @@ const userSchema = mongoose.Schema({
   isEmailVerified: { type: Boolean },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Number },
+}, {
+  timestamps: {
+    createdAt: 'created_at',
+    updatedSAt: 'updated_at',
+  },
 });
 
 export default mongoose.model('User', userSchema);

@@ -5,6 +5,7 @@ import store from 'store';
 import {
   signUp,
   verifyEmail,
+  forgotPassword,
 } from './user.actions';
 
 // Types
@@ -49,6 +50,20 @@ const userReducer = createReducer(initialState, (builder) => {
     .addCase(verifyEmail.pending, (state) => {
       state.loading = true;
       state.error = null;
+    })
+
+    .addCase(forgotPassword.fulfilled, (state, action) => {
+      state.forgotPasswordData = action.payload;
+      state.error = null;
+      state.loading = false;
+    })
+    .addCase(forgotPassword.rejected, (state, action) => {
+      state.error = action.payload as string;
+      state.loading = false;
+    })
+    .addCase(forgotPassword.pending, (state) => {
+      state.loading = true;
+      state.error = null; 
     })
 
     .addDefaultCase((state) => state);

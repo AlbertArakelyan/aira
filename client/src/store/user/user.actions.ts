@@ -4,6 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   SIGN_UP,
   VERIFY_EMAIL,
+  FORGOT_PASSWORD,
 } from './user.actionTypes';
 
 // Services
@@ -15,6 +16,8 @@ import {
   ISignUpActionReturnData,
   IVerifyEmailPayloadData,
   IVerifyEmailActionReturnData,
+  IForgotPasswordPayloadData,
+  IForgotPasswordActionReturnData,
 } from './types';
 
 
@@ -45,6 +48,23 @@ export const verifyEmail = createAsyncThunk<IVerifyEmailActionReturnData, IVerif
         throw new Error(response.data.message || 'Something went wrong');
       }
 
+      return response.data.data;
+    } catch (error: any) {
+      throw error.message as string;
+    }
+  },
+);
+
+export const forgotPassword = createAsyncThunk<IForgotPasswordActionReturnData, IForgotPasswordPayloadData>(
+  FORGOT_PASSWORD,
+  async (data) => {
+    try {
+      const response = await UserService.forgotPassword<IForgotPasswordActionReturnData, IForgotPasswordPayloadData>(data);
+
+      if (!response.data?.success) {
+        throw new Error(response.data.message || 'Something went wrong');
+      }
+      
       return response.data.data;
     } catch (error: any) {
       throw error.message as string;

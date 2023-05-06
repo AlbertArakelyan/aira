@@ -13,3 +13,7 @@ interface IUserSignUpData extends IUserSignInData {
   fullName: string;
   confirmPassword: string;
 }
+
+interface IUserForgotPasswordData {
+  email: string;
+}
