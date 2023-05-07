@@ -19,7 +19,7 @@ import { IUserForgotPasswordData } from '../../../types';
 const ForgotPassword = () => {
   const dispatch = useAppDispatch();
 
-  const { forgotPasswordData } = useAppSelector((state) => state.user);
+  const { forgotPasswordData, loading: forgotPasswordLoading } = useAppSelector((state) => state.user);
 
   const { register, handleSubmit } = useForm<IUserForgotPasswordData>({
     resolver: yupResolver(forgotPasswordSchema),
@@ -44,7 +44,11 @@ const ForgotPassword = () => {
           placeholder="Email address"
           {...register('email')}
         />
-        <Button className="w-full mb-4">
+        <Button
+          className="w-full mb-4"
+          icon={forgotPasswordLoading ? 'loader-spinner' : null}
+          disabled={forgotPasswordLoading}
+        >
           Continue
         </Button>
         <Link className="text-primary-400 underline text-sm" to="/">

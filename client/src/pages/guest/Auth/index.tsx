@@ -20,9 +20,7 @@ import { IUserSignInData, IUserSignUpData } from '../../../types';
 const Auth = () => {
   const dispatch = useAppDispatch();
 
-  const {
-    verificationData,
-  } = useAppSelector((state) => state.user);
+  const { verificationData, loading: authLoading } = useAppSelector((state) => state.user);
 
   const [isSignUp, setIsSugnUp] = useState(false);
 
@@ -86,7 +84,11 @@ const Auth = () => {
           type="password"
           {...register('confirmPassword')}
         />)}
-        <Button className="w-full mb-4">
+        <Button
+          className="w-full mb-4"
+          icon={authLoading ? 'loader-spinner' : null}
+          disabled={authLoading}
+        >
           Sign {isSignUp ? 'Up' : 'In'}
         </Button>
         <div className="text-sm flex flex-col items-center justify-start">
