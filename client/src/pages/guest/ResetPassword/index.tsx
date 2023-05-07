@@ -1,7 +1,7 @@
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useAppDispatch } from '../../../store';
+import { useAppDispatch, useAppSelector } from '../../../store';
 
 // Components
 import { Input, Button } from '../../../components';
@@ -20,6 +20,8 @@ const ResetPassword = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { resetToken } = useParams();
+
+  const { loading: resetPasswordLoading } = useAppSelector((state) => state.user);
 
   const { register, handleSubmit } = useForm<IUserResetPasswordData>({
     resolver: yupResolver(resetPasswordSchema),
@@ -62,7 +64,11 @@ const ResetPassword = () => {
           type="password"
           {...register('confirmPassword')}
         />
-        <Button className="w-full mb-4">
+        <Button
+          className="w-full mb-4"
+          icon={resetPasswordLoading ? 'loader-spinner' : null}
+          disabled={resetPasswordLoading}
+        >
           Reset
         </Button>
         <Link className="text-primary-400 underline text-sm" to="/">
