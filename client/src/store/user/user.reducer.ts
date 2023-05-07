@@ -3,6 +3,7 @@ import store from 'store';
 
 // Actions
 import {
+  signIn,
   signUp,
   verifyEmail,
   forgotPassword,
@@ -26,6 +27,21 @@ const initialState: IUserState = {
 
 const userReducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(signIn.fulfilled, (state, action) => {
+      state.userData = action.payload.userData;
+      state.accessToken = action.payload.accessToken;
+      state.error = null;
+      state.loading = false;
+    })
+    .addCase(signIn.rejected, (state, action) => {
+      state.error = action.payload as string;
+      state.loading = false;
+    })
+    .addCase(signIn.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+
     .addCase(signUp.fulfilled, (state, action) => {
       state.verificationData = action.payload;
       state.error = null;
@@ -36,8 +52,8 @@ const userReducer = createReducer(initialState, (builder) => {
       state.loading = false;
     })
     .addCase(signUp.pending, (state) => {
+      state.loading = true;
       state.error = null;
-      state.loading = false;
     })
 
     .addCase(verifyEmail.fulfilled, (state, action) => {

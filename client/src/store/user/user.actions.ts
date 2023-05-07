@@ -1,7 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import store from 'store';
 
 // Action types
 import {
+  SIGN_IN,
   SIGN_UP,
   VERIFY_EMAIL,
   FORGOT_PASSWORD,
@@ -13,6 +15,8 @@ import UserService from '../../services/UserService';
 
 // Types
 import {
+  ISignInPayloadData,
+  ISignInActionReturnData,
   ISignUpPayloadData,
   ISignUpActionReturnData,
   IVerifyEmailPayloadData,
@@ -23,6 +27,25 @@ import {
   IResetPasswordActionReturnData,
 } from './types';
 
+
+export const signIn = createAsyncThunk<ISignInActionReturnData, ISignInPayloadData>(
+  SIGN_IN,
+  async (data) => {
+    try {
+      const response = await UserService.signIn<ISignInActionReturnData, ISignInPayloadData>(data);
+
+      if (!response.data?.success) {
+        throw new Error(response.data.message || 'Something went wrong');
+      }
+
+      store.set('accessToken', response.data.data.accessToken);
+
+      return response.data.data;
+    } catch (error: any) {
+      throw error.message as string;
+    }
+  },
+);
 
 export const signUp = createAsyncThunk<ISignUpActionReturnData, ISignUpPayloadData>(
   SIGN_UP,

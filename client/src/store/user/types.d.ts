@@ -1,5 +1,9 @@
-import { IUser } from '../../types';
-import { IUserSignUpData, IUserResetPasswordData } from '../../types';
+import {
+  IUserSignUpData,
+  IUserSignInData,
+  IUserResetPasswordData,
+  IUser,
+} from '../../types';
 
 interface IUserData {
   accessToken: string | null;
@@ -17,6 +21,16 @@ interface IUserState extends IUserData {
   isPasswordReset: boolean | null;
   error: string | null;
   loading: boolean;
+}
+
+/** signIn action */
+// PayloadData
+interface ISignInPayloadData extends IUserSignInData {
+
+}
+
+interface ISignInActionReturnData extends IUserData {
+  
 }
 
 

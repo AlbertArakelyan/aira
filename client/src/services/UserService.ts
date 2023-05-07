@@ -9,6 +9,10 @@ import { IResponseData } from './types';
 
 
 class UserService extends Service {
+  static signIn<T, D>(data: D) {
+    return request<IResponseData<T>>('POST', 'user/sign-in', data);
+  }
+
   static signUp<T, D>(data: D) {
     return request<IResponseData<T>>('POST', 'user/sign-up', data);
   }

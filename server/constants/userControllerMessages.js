@@ -8,6 +8,8 @@ const userControllerMessages = {
   invalidToken: 'Token is invalid or not found.',
   passwordsDontMatch: 'Passwords don\'t match.',
   passwordResetSuccess: 'Password has successfully been reset.',
+  invalidEmailorPassword: 'Invalid Email address or password.',
+  loginSuccess: 'Successfully logged in.',
 };
 
 export default userControllerMessages;

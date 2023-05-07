@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../../store';
 import { Input, Button } from '../../../components';
 
 // Actions
-import { signUp } from '../../../store/user/user.actions';
+import { signUp, signIn } from '../../../store/user/user.actions';
 
 // Utils
 import { signUpSchema, signInSchema } from '../../../utils';
@@ -38,6 +38,9 @@ const Auth = () => {
     if (isSignUp) {
       const sendData = data as IUserSignUpData;
       dispatch(signUp(sendData));
+    } else {
+      const sendData = data as IUserSignInData;
+      dispatch(signIn(sendData));
     }
   };
 

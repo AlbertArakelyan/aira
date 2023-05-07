@@ -19,6 +19,63 @@ import userControllerMessages from '../constants/userControllerMessages.js';
 dotenv.config();
 
 class UserController extends Controller {
+  static async signIn(req, res) {
+    try {
+      const { email, password } = req.body;
+
+      // TODO add validations based on all fields
+
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        return res.status(400).json({
+          success: false,
+          message: userControllerMessages.invalidEmailorPassword,
+          statusCode: 400,
+        });
+      }
+
+      const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+      if (!isPasswordCorrect) {
+        return res.status(400).json({
+          success: false,
+          message: userControllerMessages.invalidEmailorPassword,
+          statusCode: 400,
+        });
+      }
+
+      const accessToken = jwt.sign({
+        email,
+        id: user._id,
+      }, process.env.JWT_SECRET);
+
+      const userData = {
+        id: user._id,
+        email: user.email,
+        fullName: user.fullName,
+        photoPath: user.photoPath,
+      };
+
+      res.status(200).json({
+        success: true,
+        data: {
+          accessToken,
+          userData,
+        },
+        message: userControllerMessages.loginSuccess,
+        statusCode: 200,
+      });
+    } catch (error) {
+      super.catchError(error);
+      res.status(500).json({
+        success: false,
+        message: error.message || 'Something went wrong.',
+        statusCode: 500,
+      });
+    }
+  }
+
   static async signUp(req, res) {
     try {
       const {
