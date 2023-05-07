@@ -81,3 +81,9 @@ interface IResetPasswordPayloadData extends IUserResetPasswordData {
 interface IResetPasswordActionReturnData {
   isPasswordReset: boolean;
 }
+
+
+/** getUser action */
+interface IGetUserActionReturnData {
+  userData: IUser;
+}

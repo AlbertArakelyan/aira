@@ -46,8 +46,10 @@ class UserController extends Controller {
       }
 
       const accessToken = jwt.sign({
-        email,
         id: user._id,
+        email: user.email,
+        fullName: user.fullName,
+        role: user.role,
       }, process.env.JWT_SECRET);
 
       const userData = {
@@ -55,6 +57,7 @@ class UserController extends Controller {
         email: user.email,
         fullName: user.fullName,
         photoPath: user.photoPath,
+        role: user.role,
       };
 
       res.status(200).json({
@@ -274,6 +277,46 @@ class UserController extends Controller {
           isPasswordReset: true,
         },
         message: userControllerMessages.passwordResetSuccess,
+        statusCode: 200,
+      });
+    } catch (error) {
+      super.catchError(error);
+      res.status(500).json({
+        success: false,
+        message: error.message || 'Something went wrong.',
+        statusCode: 500,
+      });
+    }
+  }
+
+  static async getUser(req, res) {
+    try {
+      const userId = req.user.id;
+      console.log(userId);
+
+      const user = await User.findById(userId);
+
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: userControllerMessages.userDataNotFound,
+          statusCode: 404,
+        });
+      }
+
+      const userData = {
+        id: user._id,
+        email: user.email,
+        fullName: user.fullName,
+        photoPath: user.photoPath,
+      };
+
+      res.status(200).json({
+        success: true,
+        data: {
+          userData,
+        },
+        message: userControllerMessages.userDataReceived,
         statusCode: 200,
       });
     } catch (error) {

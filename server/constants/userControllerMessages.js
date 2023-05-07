@@ -10,6 +10,8 @@ const userControllerMessages = {
   passwordResetSuccess: 'Password has successfully been reset.',
   invalidEmailorPassword: 'Invalid Email address or password.',
   loginSuccess: 'Successfully logged in.',
+  userDataNotFound: 'User data not found.',
+  userDataReceived: 'User data redeived successfully.',
 };
 
 export default userControllerMessages;

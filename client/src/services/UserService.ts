@@ -28,6 +28,10 @@ class UserService extends Service {
   static resetPassword<T, D>(data: D) {
     return request<IResponseData<T>>('POST', 'user/reset-password', data);
   }
+
+  static getUser<T>() {
+    return request<IResponseData<T>>('GET', 'user');
+  }
 }
 
 export default UserService;

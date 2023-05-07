@@ -8,6 +8,7 @@ import {
   verifyEmail,
   forgotPassword,
   resetPassword,
+  getUser,
 } from './user.actions';
 
 // Types
@@ -96,6 +97,20 @@ const userReducer = createReducer(initialState, (builder) => {
     .addCase(resetPassword.pending, (state) => {
       state.loading = true;
       state.error = null; 
+    })
+
+    .addCase(getUser.fulfilled, (state, action) => {
+      state.userData = action.payload.userData;
+      state.loading = false;
+      state.error = null;
+    })
+    .addCase(getUser.rejected, (state, action) => {
+      state.error = action.payload as string;
+      state.loading = false;
+    })
+    .addCase(getUser.pending, (state) => {
+      state.loading = true;
+      state.error = null;
     })
 
     .addDefaultCase((state) => state);

@@ -8,6 +8,7 @@ import {
   VERIFY_EMAIL,
   FORGOT_PASSWORD,
   RESET_PASSWORD,
+  GET_USER,
 } from './user.actionTypes';
 
 // Services
@@ -25,6 +26,7 @@ import {
   IForgotPasswordActionReturnData,
   IResetPasswordPayloadData,
   IResetPasswordActionReturnData,
+  IGetUserActionReturnData,
 } from './types';
 
 
@@ -103,6 +105,23 @@ export const resetPassword = createAsyncThunk<IResetPasswordActionReturnData, IR
   async (data) => {
     try {
       const response = await UserService.resetPassword<IResetPasswordActionReturnData, IResetPasswordPayloadData>(data);
+
+      if (!response.data?.success) {
+        throw new Error(response.data.message || 'Something went wrong');
+      }
+
+      return response.data.data;
+    } catch (error: any) {
+      throw error.message as string;
+    }
+  },
+);
+
+export const getUser = createAsyncThunk<IGetUserActionReturnData>(
+  GET_USER,
+  async () => {
+    try {
+      const response = await UserService.getUser<IGetUserActionReturnData>();
 
       if (!response.data?.success) {
         throw new Error(response.data.message || 'Something went wrong');

@@ -11,13 +11,16 @@ import ResetPassword from './pages/guest/ResetPassword';
 // Components
 import { UserLayout } from './components';
 
+// Hooks
+import { useAuth } from './hooks';
+
 
 const App = () => {
-  const user = null;
+  const acessToken = useAuth();
 
   return (
     <div className="App">
-      {user ? (
+      {acessToken ? (
         <Routes>
           <Route element={<UserLayout />}>
             <Route path="/" element={<Summarizer />} />
