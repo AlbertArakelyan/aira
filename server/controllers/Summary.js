@@ -3,6 +3,9 @@ import axios from 'axios';
 // Controllers
 import Controller from './Controller.js';
 
+// Models
+import Summary from '../models/Summary.js';
+
 // Services
 import SummaryService from '../services/SummaryService.js';
 
@@ -13,18 +16,10 @@ import summaryControllerMessages from '../constants/summaryControllerMessages.js
 class SummaryController extends Controller {
   static async summarize(req, res) {
     try {
-      const headers = req.headers;
-      const { url, length } = req.query;
+      const { url, length } = req.body;
+      const userId = req.user.id;
 
-      if (!('X-RapidAPI-Key' in headers) || !('X-RapidAPI-Host' in headers)) {
-        return res.status(400).json({
-          success: false,
-          message: summaryControllerMessages.neededHeadersNotProvided,
-          statusCode: 400,
-        });
-      }
-
-      if (!url || !length) {
+      if (!url) {
         return res.status(400).json({
           success: false,
           message: summaryControllerMessages.urlNotProvidedCorrectly,
@@ -37,13 +32,26 @@ class SummaryController extends Controller {
         length,
       };
 
-      const response = await SummaryService.summarize(params, headers);
+      const response = await SummaryService.summarize(params);
       const { data } = response;
+
+      if (!response.data?.summary) {
+        throw new Error('Something went wrong');
+      }
+
+      const summary = new Summary({
+        url,
+        summary: data.summary,
+        userId,
+      });
+
+      await summary.save();
 
       res.status(200).json({
         success: true,
         data: {
-          summary: data,
+          summary: data.summary,
+          url,
         },
         message: summaryControllerMessages.summarizeSucces,
         statusCode: 200,
@@ -58,3 +66,5 @@ class SummaryController extends Controller {
     }
   }
 }
+
+export default SummaryController;

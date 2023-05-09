@@ -1,0 +1,1 @@
+export const SUMMARIZE = 'summary/SUMMARIZE';

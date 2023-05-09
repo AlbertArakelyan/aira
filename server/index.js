@@ -8,6 +8,7 @@ import connectDB from './db.js';
 
 // Routers
 import userRouter from './routes/user.js';
+import summaryRouter from './routes/summary.js';
 
 
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(bodyParser.json());
 
 // Routes
 app.use('/api/v1/user', userRouter);
+app.use('/api/v1/summary', summaryRouter);
 
 // Connect db and start server
 app.get('/', (req, res) => {
