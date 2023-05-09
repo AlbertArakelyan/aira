@@ -12,3 +12,8 @@ export { default as Icon } from './shared/Icon';
 export { default as Avatar } from './UI/Avatar';
 export { default as Input } from './UI/Input';
 export { default as Button } from './UI/Button';
+export { default as Loader } from './UI/Loader';
+
+// Pages
+// Summarizer
+export { default as Summary } from './pages/Summarizer/Summary';

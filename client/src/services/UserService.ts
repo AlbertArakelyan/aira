@@ -1,8 +1,8 @@
-// Utils
-import { request } from '../utils';
-
 // Services
 import Service from './Service';
+
+// Utils
+import { request } from '../utils';
 
 // Types
 import { IResponseData } from './types';

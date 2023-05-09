@@ -292,7 +292,6 @@ class UserController extends Controller {
   static async getUser(req, res) {
     try {
       const userId = req.user.id;
-      console.log(userId);
 
       const user = await User.findById(userId);
 

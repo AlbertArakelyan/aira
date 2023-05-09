@@ -13,7 +13,7 @@ const userSchema = mongoose.Schema({
 }, {
   timestamps: {
     createdAt: 'created_at',
-    updatedSAt: 'updated_at',
+    updatedAt: 'updated_at',
   },
 });
 
